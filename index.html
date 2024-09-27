@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Groups with Dark Mode and Main Container</title>
+
+    <!-- Link to Google Fonts for Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Apply Open Sans font globally */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #1e1e1e;
+            color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Main container that holds all groups */
+        .main-container {
+            border: 2px solid #888;
+            border-radius: 15px;
+            padding: 20px;
+            width: 90%;
+            margin: 120px auto 80px; /* Lowered margin to avoid being covered by the header */
+            background-color: #333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Container for the groups */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .group-container {
+        border: 2px solid #888;
+     border-radius: 10px;
+     padding: 15px;
+        margin-bottom: 20px;
+        background-color: #444;
+}
+
+        /* Button styling */
+        .toggle-button {
+    width: 200px;
+    padding: 10px;
+    text-align: left;
+    cursor: pointer;
+    border: 3px solid #888;
+    color: #f5f5f5;
+    border-radius: 4px;
+    transition: background-color 0.3s; /* Add transition for smooth color change */
+}
+
+/* Text spans styling */
+.left-text {
+    flex: 1; /* Take available space on the left */
+    text-align: left; /* Align text to the left */
+}
+
+.center-text {
+    flex: 1; /* Take equal space */
+    text-align: center; /* Center align text */
+}
+
+.right-text {
+    flex: 1; /* Take available space on the right */
+    text-align: right; /* Align text to the right */
+}
+
+
+
+        /* Background color states */
+        .state0 { background-color: #4a4a4a; }
+        .state1 { background-color: #ff6666; }
+        .state2 { background-color: #66ff66; }
+        .state3 { background-color: #6666ff; }
+
+        /* Fixed position for overall counter, lowered to avoid header */
+        #overall-counter {
+    position: fixed;
+    top: 60px; /* Adjust this if needed */
+    right: 20px;
+    padding: 10px;
+    font-size: 24px;
+    background-color: #444;
+    border-radius: 10px;
+    color: #f5f5f5;
+    z-index: 100;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+        /* First header with centered text */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #222;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 101;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Centering header content */
+        header img {
+            height: 40px;
+            margin-right: 15px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            display: inline-block;
+            color: #f9c8da;
+        }
+
+        /* Buttons in the header */
+        .header-buttons {
+            position: absolute;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-buttons button {
+            padding: 10px 20px;
+            border: 2px solid #888;
+            background-color: #444;
+            color: #f5f5f5;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .header-buttons button:hover {
+            background-color: #555;
+        }
+
+        /* Mission Brief Toggle Header */
+        .toggle-header {
+        background-color: #333;
+         color: #f5f5f5;
+        padding: 10px;
+        font-size: 18px;
+          cursor: pointer;
+         border: 2px solid #888;
+         border-radius: 10px;
+         margin: 20px 0; /* Existing margin */
+         margin-top: 70px; /* Adjust this value to push down from the header */
+         text-align:center ;
+}
+
+        /* Information box */
+        #info-box {
+            background-color: #444;
+            padding: 15px;
+            border-radius: 10px;
+            display: block;
+            border: 2px solid #888;
+            margin-bottom: 20px;
+        }
+
+        #info-box.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header with centered title and image -->
+    <header>
+        <img src="https://content.invisioncic.com/Mwarframe/pages_media/ConqueraGlyph.png" alt="Logo">
+        <h1>QTCC CC C V2.0</h1>
+        <div class="header-buttons", style="padding-right:2%">
+            <button onclick="alert('Button 1 clicked!')">Button 1</button>
+            <button onclick="alert('Button 2 clicked!')">Button 2</button>
+        </div>
+    </header>
+
+    <!-- Overall total counter, fixed and lowered -->
+    <div id="overall-counter">Total: 0</div>
+
+    <!-- Mission Brief section (initially open) -->
+    <div class="toggle-header" onclick="toggleInfoBox()">Mission Brief</div>
+    <div id="info-box">
+        <!-- Info will be loaded from file/maininfo.html -->
+    </div>
+
+    <!-- Main container for all groups, with a border around them -->
+    <div class="main-container">
+        <div class="container" id="groups-container">
+            <!-- All groups will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <script>
+        let overallCounter = 0;
+
+        let totalPoints = 0;
+
+// Function to toggle button states and update the counter
+function toggleButton(button) {
+    const currentState = parseInt(button.getAttribute('data-state'));
+    const maxState = parseInt(button.getAttribute('data-max-state'));
+    const nextState = (currentState + 1) % (maxState + 1);
+
+    // Get the button's associated value
+    const buttonValue = parseInt(button.getAttribute('data-value'));
+
+    // Update the overall counter based on state changes
+    if (currentState === 0) {
+        overallCounter += buttonValue;  // Adding value for state 1
+    } else if (currentState === 1) {
+        overallCounter -= buttonValue;   // Removing value for state 1
+        overallCounter += buttonValue * 2; // Adding value for state 2
+    } else if (currentState === 2) {
+        overallCounter -= buttonValue * 2; // Removing value for state 2
+        overallCounter += buttonValue * 3; // Adding value for state 3
+    } else if (currentState === 3) {
+        overallCounter -= buttonValue * 3; // Removing value for state 3
+    }
+
+    // Update the overall counter display
+    document.getElementById('overall-counter').innerText = 'Total: ' + overallCounter;
+
+    // Update the button's state and classes
+    button.setAttribute('data-state', nextState);
+    button.classList.remove(`state${currentState}`);
+    button.classList.add(`state${nextState}`);
+}
+
+
+
+
+        function loadHTMLFile(targetElementId, filePath) {
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        document.getElementById(targetElementId).innerHTML = xhr.responseText;
+                    } else {
+                        console.error("Error loading " + filePath);
+                    }
+                }
+            };
+            xhr.open("GET", filePath, true);
+            xhr.send();
+        }
+
+        loadHTMLFile('info-box', '/files/maininfo.html');
+
+        function toggleInfoBox() {
+            const infoBox = document.getElementById('info-box');
+            infoBox.classList.toggle('hidden');
+        }
+
+        const groupFiles = [
+            "/files/Group1.html",
+            "/files/Group2.html",
+            "/files/Group3.html",
+            "/files/Group4.html",
+            "/files/Group5.html",
+            "/files/Group6.html"
+        ];
+
+        const groupsContainer = document.getElementById('groups-container');
+        groupFiles.forEach((file, index) => {
+            const groupDiv = document.createElement('div');
+            groupDiv.classList.add('group-container');
+            groupDiv.id = `group-${index + 1}`;
+            groupsContainer.appendChild(groupDiv);
+            loadHTMLFile(groupDiv.id, file);
+        });
+    </script>
+</body>
+</html>
