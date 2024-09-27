@@ -3,12 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QTCC Creator Clash</title>
+    <title>Dynamic Groups with Dark Mode and Main Container</title>
 
     <!-- Link to Google Fonts for Open Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
+
+        #menu {
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #f5f5f5;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 200; /* Ensure it's on top of other elements */
+            overflow-y: auto; /* Enable scrolling if content overflows */
+        }
+
+        /* Close button styling */
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 5%;
+            padding: 10px 20px;
+            border: none;
+            background-color: #ff6666;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+
         /* Apply Open Sans font globally */
         body {
             font-family: 'Open Sans', sans-serif;
@@ -58,18 +88,18 @@
 
 /* Text spans styling */
 .left-text {
-    flex: 1; 
-    text-align: left; 
+    flex: 1; /* Take available space on the left */
+    text-align: left; /* Align text to the left */
 }
 
 .center-text {
-    flex: 1; 
-    text-align: center; 
+    flex: 1; /* Take equal space */
+    text-align: center; /* Center align text */
 }
 
 .right-text {
-    flex: 1; 
-    text-align: right; 
+    flex: 1; /* Take available space on the right */
+    text-align: right; /* Align text to the right */
 }
 
 
@@ -177,9 +207,9 @@
     <header>
         <img src="https://content.invisioncic.com/Mwarframe/pages_media/ConqueraGlyph.png" alt="Logo">
         <h1>QTCC CC C V2.0</h1>
-        <div class="header-buttons", style="padding-right:2%">
-            <button onclick="alert('Button 1 clicked!')">Button 1</button>
-            <button onclick="alert('Button 2 clicked!')">Button 2</button>
+        <div class="header-buttons" style="padding-right:2%">
+            <button class="header-button" onclick="openMenu('addinfo')">Button 1</button>
+            <button class="header-button" onclick="openMenu('other')">Button 2</button>
         </div>
     </header>
 
@@ -199,7 +229,39 @@
         </div>
     </div>
 
+    <div id="menu">
+        <button class="close-button" onclick="closeMenu()">Close</button>
+        <div id="menu-content">
+            <!-- Content from the text document will be loaded here -->
+        </div>
+    </div>
+
+
+
     <script>
+
+        
+function openMenu(type) {
+            const menu = document.getElementById('menu');
+            menu.style.display = 'block'; // Show the menu
+            const menuContent = document.getElementById('menu-content');
+
+            // Load content based on the button clicked
+            if (type === 'addinfo') {
+                loadHTMLFile('menu-content', '/files/addinfo.html');
+            } else if (type === 'other') {
+                // You can add another file for the second button
+                loadHTMLFile('menu-content', '/files/otherinfo.html'); // Change this to your desired file
+            }
+        }
+
+        function closeMenu() {
+            const menu = document.getElementById('menu');
+            menu.style.display = 'none'; // Hide the menu
+            document.getElementById('menu-content').innerHTML = ''; // Clear previous content
+        }
+
+
         let overallCounter = 0;
 
         let totalPoints = 0;
