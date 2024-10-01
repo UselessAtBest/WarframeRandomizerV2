@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QTCC|CC|C VERSION 2</title>
+    <title>Dynamic Groups with Dark Mode and Main Container</title>
 
     <!-- Link to Google Fonts for Open Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
+
         #menu {
             display: none; /* Initially hidden */
             position: fixed;
@@ -39,7 +39,7 @@
         }
 
 
-
+        /* Apply Open Sans font globally */
         body {
             font-family: 'Open Sans', sans-serif;
             background-color: #1e1e1e;
@@ -48,17 +48,18 @@
             padding: 0;
         }
 
-
+        /* Main container that holds all groups */
         .main-container {
             border: 2px solid #888;
             border-radius: 15px;
             padding: 20px;
             width: 90%;
-            margin: 120px auto 80px;
+            margin: 120px auto 80px; /* Lowered margin to avoid being covered by the header */
             background-color: #333;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
+        /* Container for the groups */
         .container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -76,42 +77,64 @@
         text-align: center;
 }
 
- 
+    /* Specific styles for h2 elements */
     .group-container h2 {
-    margin: 5px 0; 
+    margin: 5px 0; /* Adjust this value to control vertical spacing */
 }
 
-
+        /* Button styling */
         .toggle-button {
-    width: 100%;
-    padding: 10px 0; 
-    text-align: center; 
+    width: 100%; /* Make each button take full width of the group */
+    padding: 10px 0; /* Vertical padding */
+    text-align: center; /* Center text in button */
     cursor: pointer;
     border: 3px solid #888;
     color: #f5f5f5;
     border-radius: 4px;
-    margin: 5px 0; 
-    display: block; 
+    margin: 5px 0; /* Margin for spacing between buttons */
+    display: block; /* Button behaves as a block element */
 }
 
 .group-container > .toggle-button {
     flex-grow: 1; /* Allow buttons to grow equally */
 }
+
+/* Text spans styling */
+.left-text {
+    flex: 1; /* Take available space on the left */
+    text-align: left; /* Align text to the left */
+}
+
+.center-text {
+    flex: 1; /* Take equal space */
+    text-align: center; /* Center align text */
+}
+
+.right-text {
+    flex: 1; /* Take available space on the right */
+    text-align: right; /* Align text to the right */
+}
+
+
+
+        /* Background color states */
         .state0 { background-color: #4a4a4a; }
         .state1 { background-color: #56C265; color:black; }
         .state2 { background-color: #B850DC; color:black; }
+        .state3 { background-color: #6666ff; }
 
+        /* Fixed position for overall counter, lowered to avoid header */
         #overall-counter {
-        position: fixed;
-         top: 140px; 
-        right: 20px;
-        padding: 10px;
-        font-size: 24px;
-        background-color: #444;
-        border-radius: 10px;
-        color: #f5f5f5;
-        z-index: 100;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 60px; /* Adjust this if needed */
+    right: 20px;
+    padding: 10px;
+    font-size: 24px;
+    background-color: #444;
+    border-radius: 10px;
+    color: #f5f5f5;
+    z-index: 100;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
         /* First header with centered text */
@@ -126,12 +149,11 @@
             align-items: center;
             z-index: 101;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-            height: 100px;
         }
 
         /* Centering header content */
         header img {
-            height: 120px;
+            height: 40px;
             margin-right: 15px;
         }
 
@@ -140,7 +162,6 @@
             font-size: 24px;
             display: inline-block;
             color: #f9c8da;
-            font-size: 45px;
         }
 
         /* Buttons in the header */
@@ -164,30 +185,21 @@
             background-color: #555;
         }
 
+        /* Mission Brief Toggle Header */
         .toggle-header {
-        background-color: #1C1C1C;
+        background-color: #333;
          color: #f5f5f5;
         padding: 10px;
-        padding-top: 20px;
         font-size: 18px;
           cursor: pointer;
          border: 2px solid #888;
          border-radius: 10px;
-         margin: 20px 0; 
-         margin-top: 130px; 
+         margin: 20px 0; /* Existing margin */
+         margin-top: 70px; /* Adjust this value to push down from the header */
          text-align:center ;
-         width: 90%;
-         right: 5%;
-         height: 80px;
-         font-size: 30px;
-         top: 120px;
 }
 
-    .header-small {
-        font-size: 15px;
-        color: #C4C4C4;
-    }
-
+        /* Information box */
         #info-box {
             background-color: #444;
             padding: 15px;
@@ -200,37 +212,40 @@
         #info-box.hidden {
             display: none;
         }
-
     </style>
 </head>
 <body>
 
+    <!-- Header with centered title and image -->
     <header>
         <img src="https://content.invisioncic.com/Mwarframe/pages_media/ConqueraGlyph.png" alt="Logo">
         <h1>QTCC CC C V2.0</h1>
         <div class="header-buttons" style="padding-right:2%">
-            <button class="header-button" onclick="openMenu('addinfo')">Additional Info</button>
-            <br>
-            <button id="Button2">Show Previous Rolls</button>
+            <button class="header-button" onclick="openMenu('addinfo')">Button 1</button>
+            <button class="header-button" onclick="openMenu('other')">Button 2</button>
         </div>
     </header>
 
+    <!-- Overall total counter, fixed and lowered -->
     <div id="overall-counter">Total: 0</div>
 
-    <div class="toggle-header" onclick="toggleInfoBox()">Mission Brief
-    <div class="header-small"> (Click to toggle)
-        </div>
+    <!-- Mission Brief section (initially open) -->
+    <div class="toggle-header" onclick="toggleInfoBox()">Mission Brief</div>
+    <div id="info-box">
+        <!-- Info will be loaded from file/maininfo.html -->
     </div>
-    <div id="info-box"></div>
-   
+
+    <!-- Main container for all groups, with a border around them -->
     <div class="main-container">
         <div class="container" id="groups-container">
+            <!-- All groups will be dynamically loaded here -->
         </div>
     </div>
 
     <div id="menu">
         <button class="close-button" onclick="closeMenu()">Close</button>
         <div id="menu-content">
+            <!-- Content from the text document will be loaded here -->
         </div>
     </div>
 
@@ -242,49 +257,58 @@
         
 function openMenu(type) {
             const menu = document.getElementById('menu');
-            menu.style.display = 'block'; 
+            menu.style.display = 'block'; // Show the menu
             const menuContent = document.getElementById('menu-content');
 
+            // Load content based on the button clicked
             if (type === 'addinfo') {
                 loadHTMLFile('menu-content', '/files/addinfo.html');
             } else if (type === 'other') {
-                loadHTMLFile('menu-content', '/files/otherinfo.html'); 
+                // You can add another file for the second button
+                loadHTMLFile('menu-content', '/files/otherinfo.html'); // Change this to your desired file
             }
         }
 
         function closeMenu() {
             const menu = document.getElementById('menu');
-            menu.style.display = 'none'; 
-            document.getElementById('menu-content').innerHTML = ''; 
-        }
-
-        function hideHoverPreview() {
-            document.getElementById('hover-preview').style.display = 'none';
+            menu.style.display = 'none'; // Hide the menu
+            document.getElementById('menu-content').innerHTML = ''; // Clear previous content
         }
 
 
+        let overallCounter = 0;
+
+        let totalPoints = 0;
 
         function toggleButton(button) {
     const currentState = parseInt(button.getAttribute('data-state'));
     const maxState = parseInt(button.getAttribute('data-max-state'));
     const value = parseInt(button.getAttribute('data-value'));
 
+    // Logic for state transitions based on the number of states
     if (currentState === 0) {
-        overallCounter += value; 
+        // From state 0 to state 1 (only in 2-state)
+        overallCounter += value; // Add value for state 1
     } else if (currentState === 1) {
         if (maxState === 1) {
-            overallCounter -= value; 
+            // Transition from state 1 to state 0 in 2-state button
+            overallCounter -= value; // Remove value for state 0
         } else {
-            overallCounter += value;
+            // From state 1 to state 2 (in 3-state)
+            overallCounter += value; // Add value for state 2
         }
     } else if (currentState === 2) {
-        overallCounter -= value * 2; 
+        // From state 2 to state 0 (in 3-state)
+        overallCounter -= value * 2; // Remove value * 2 when going back to state 0
     }
 
+    // Update overall counter display
     document.getElementById('overall-counter').innerText = 'Total: ' + overallCounter;
 
+    // Calculate the next state
     const nextState = (currentState + 1) % (maxState + 1);
 
+    // Update button state and class
     button.setAttribute('data-state', nextState);
     button.classList.remove(`state${currentState}`);
     button.classList.add(`state${nextState}`);
@@ -314,11 +338,25 @@ function openMenu(type) {
         }
 
         const groupFiles = [
-            "/files/Group1.html","/files/Group2.html","/files/Group3.html","/files/Group4.html",
-            "/files/Group5.html","/files/Group6.html","/files/Group7.html","/files/Group8.html",
-            "/files/Group9.html","/files/Group10.html","/files/Group11.html","/files/Group12.html",
-            "/files/Group13.html","/files/Group14.html","/files/Group15.html", "/files/Group16.html",
-            "/files/Group17.html", "/files/Group18.html","/files/Group19.html",
+            "/files/Group1.html",
+            "/files/Group2.html",
+            "/files/Group3.html",
+            "/files/Group4.html",
+            "/files/Group5.html",
+            "/files/Group6.html",
+            "/files/Group7.html",
+            "/files/Group8.html",
+            "/files/Group9.html",
+            "/files/Group10.html",
+            "/files/Group11.html",
+            "/files/Group12.html",
+            "/files/Group13.html",
+            "/files/Group14.html",
+            "/files/Group15.html",
+            "/files/Group16.html",
+            "/files/Group17.html",
+            "/files/Group18.html",
+            "/files/Group19.html",
 
         ];
 
@@ -330,96 +368,6 @@ function openMenu(type) {
             groupsContainer.appendChild(groupDiv);
             loadHTMLFile(groupDiv.id, file);
         });
-
-
-        let overallCounter = 0;
-   
-         let lastRoll = null;
-
-    function handleButtonClick(button, points) {
-        if (overallCounter >= points) {
-            overallCounter -= points;
-            document.getElementById('overall-counter').innerText = 'Total: ' + overallCounter;
-
-            fetchRandomLine().then(line => {
-                document.getElementById('output-box').innerText = line;
-                updateHistory(line, points);
-                lastRoll = { line, points };
-            });
-        } else {
-            document.getElementById('output-box').innerText = 'Not enough points!';
-        }
-    }
-
-    function fetchRandomLine() {
-        return fetch('files/rolls/warframe/roll1.html')
-            .then(response => response.text())
-            .then(data => {
-                const lines = data.split('\n').filter(line => !line.includes('<s>'));
-                const randomLine = lines[Math.floor(Math.random() * lines.length)];
-                return randomLine;
-            });
-    }
-
-    function updateHistory(line, points) {
-            const newEntry = `<div class="history-entry">${line} (${points} points)</div>`;
-            document.getElementById('rolls-history').innerHTML += newEntry;
-        }
-
-        function undoLastRoll() {
-            if (lastRoll) {
-                overallCounter += lastRoll.points;
-                document.getElementById('overall-counter').innerText = 'Total: ' + overallCounter;
-
-                // Remove the <s> tag simulation
-                lastRoll = null;
-            }
-        }
-
-    function discardLastRoll() {
-        lastRoll = null;
-    }
-
-    function selectRandomLine(button) {
-            const points = parseInt(button.getAttribute('data-points'));
-            const file = button.getAttribute('data-file');
-
-            if (overallCounter >= points) {
-                overallCounter -= points;
-                document.getElementById('overall-counter').innerText = 'Total: ' + overallCounter;
-
-                fetch(file)
-                    .then(response => response.text())
-                    .then(content => {
-                        const lines = content.split('\n').filter(line => !line.includes('<s>'));
-                        if (lines.length > 0) {
-                            const randomLine = lines[Math.floor(Math.random() * lines.length)];
-                            document.getElementById('output-box').innerHTML = randomLine; // Apply HTML tags
-                            updateHistory(randomLine, points);
-
-                            // Tag the selected line in the file (simulated here)
-                            lastRoll = { file, randomLine, points };
-                        } else {
-                            document.getElementById('output-box').innerText = 'No available lines left';
-                        }
-                    });
-            } else {
-                document.getElementById('output-box').innerText = 'Not enough points!';
-            }
-        }
-
-    function toggleInfoBox() {
-        const infoBox = document.getElementById('info-box');
-        infoBox.style.display = infoBox.style.display === 'none' ? 'block' : 'none';
-    }
-
-    function openMenu() {
-        document.getElementById('menu').style.display = 'block';
-    }
-
-
-
-
-</script>
+    </script>
 </body>
 </html>
