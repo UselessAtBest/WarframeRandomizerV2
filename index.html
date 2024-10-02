@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Groups with Dark Mode and Main Container</title>
+    <title>QTCC Creator Clash</title>
 
     <!-- Link to Google Fonts for Open Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://content.invisioncic.com/Mwarframe/pages_media/ConqueraGlyph.png">
 
     <style>
 
@@ -25,12 +26,13 @@
             overflow-y: auto; /* Enable scrolling if content overflows */
         }
 
+
         .column-1 { background-color: #7f4dcb;
                     padding: 10px 20px;
                     color: black;
                     border: 2px solid #888;
                     border-radius: 5px;
-                    cursor: pointer; }
+                    cursor: pointer;}
         .column-2 { background-color: #FF6A2D;
                     padding: 10px 20px;
                     color: black;
@@ -104,7 +106,15 @@
 
     /* Specific styles for h2 elements */
     .group-container h2 {
-    margin: 5px 0; /* Adjust this value to control vertical spacing */
+    margin: 2px 0; /* Adjust this value to control vertical spacing */
+    font-size: 5vh;
+}
+
+
+.h3 {
+    font-size: 0.3vh;
+    font-weight:bold;
+
 }
 
         /* Button styling */
@@ -138,6 +148,29 @@
 .right-text {
     flex: 1; /* Take available space on the right */
     text-align: right; /* Align text to the right */
+}
+
+.left-text-bold {
+    flex: 1; /* Take available space on the left */
+    text-align: left; /* Align text to the left */
+    font-weight: bold;
+    text-decoration:underline
+
+}
+
+.center-text-bold {
+    flex: 1; /* Take equal space */
+    text-align: center; /* Center align text */
+    font-weight: bold;
+    text-decoration:underline;
+
+}
+
+.right-text-bold {
+    flex: 1; /* Take available space on the right */
+    text-align: right; /* Align text to the right */
+    font-weight: bold;
+    text-decoration:underline
 }
 
 
@@ -251,12 +284,13 @@
             justify-content:center
         }
         .btn {
-            padding: 10px 20px;
+            padding: 10px 10px;
             background-color: #444;
             color: #f5f5f5;
             border: 2px solid #888;
             border-radius: 5px;
             cursor: pointer;
+            gap:5px;
         }
         .btn:hover {
             background-color: #555;
@@ -268,9 +302,9 @@
             background-color: #333;
             border-radius: 5px;
             border: 2px solid #888;
-            width: 50%;
+            width: 30%;
             justify-content: center;
-            margin-left:25%;
+            margin-left:35%;
         }
 
         
@@ -281,7 +315,7 @@
     <!-- Header with centered title and image -->
     <header>
         <img src="https://content.invisioncic.com/Mwarframe/pages_media/ConqueraGlyph.png" alt="Logo">
-        <h1>QTCC CC C V2.0</h1>
+        <h1>QTCC Creator Clash <small style="font-size:10px">Challenge</small> V2.0</h1>
         <div class="header-buttons" style="padding-right:2%">
             <button class="header-button" onclick="openMenu('addinfo')">Button 1</button>
             <button class="header-button" onclick="openMenu('other')">Button 2</button>
@@ -298,61 +332,102 @@
     </div>
 
     <div class="manual-container">
-        <div id="button-text">
+        <div id="btn">
             Manually adjust your score with these buttons!
         </div>
         <div class="button-container">
         <!-- Buttons to add values to overallCounter -->
+        <button class="btn" onclick="modifyCounter(1)">+1</button>
+        <button class="btn" onclick="modifyCounter(3)">+3</button>
+        <button class="btn" onclick="modifyCounter(5)">+5</button>
         <button class="btn" onclick="modifyCounter(10)">+10</button>
-        <button class="btn" onclick="modifyCounter(20)">+20</button>
-        <button class="btn" onclick="modifyCounter(30)">+30</button>
-        <button class="btn" onclick="modifyCounter(40)">+40</button>
         </div>
     
     <div class="button-container">
         <!-- Buttons to subtract values from overallCounter -->
+        <button class="btn" onclick="modifyCounter(-1)">-1</button>
+        <button class="btn" onclick="modifyCounter(-3)">-3</button>
+        <button class="btn" onclick="modifyCounter(-5)">-5</button>
         <button class="btn" onclick="modifyCounter(-10)">-10</button>
-        <button class="btn" onclick="modifyCounter(-20)">-20</button>
-        <button class="btn" onclick="modifyCounter(-30)">-30</button>
-        <button class="btn" onclick="modifyCounter(-40)">-40</button>
     </div>
 </div>
+            <!-- BUTTONS FOR WARFRAME ROLLS-->
+    <div class="button-container">
+                <button style="width:215px ; height: 80px" class="column-1" onclick="generate(0, 10)" style="color:black">
+                    <b style="color:black; font-size: 2vh; white-space:nowrap">Warframe</b> <span style="font-size: 1.5vh;"><br>10 Points</span></button>
+        
+                <button style="width:215px ; height: 80px" class="column-1" onclick="generate(1, 3)"style="color:black">
+                    <b style="color:black; font-size: 2vh; white-space:nowrap">Warframe Mod</b> <span style="font-size: 1.5vh;"> <br> <strong><u>Aura</u></strong> <br>3 Points</span></button>
+        
+                <button style="width:215px ; height: 80px" class="column-1" onclick="generate(2, 5)"style="color:black">
+                    <b style="color:black; font-size: 2vh; white-space:nowrap">Warframe Mod</b> <span style="font-size: 1.5vh;"><br> <strong><u>High Cost</u></strong> <br>5 Points</span></button>
+        
+                <button style="width:215px ; height: 80px" class="column-1" onclick="generate(3, 3)"style="color:black">
+                    <b style="color:black; font-size: 2vh; white-space:nowrap">Warframe</b> <span style="font-size: 1.5vh;"> <br> <strong><u>Low Cost</u></strong> <br>3 Points</span></button>
+        
+                <button style="width:215px ; height: 80px" class="column-1" onclick="generate(4, 1)"style="color:black">
+                    <b style="color:black; font-size: 2vh; font-size: 2vh; white-space:nowrap">Warframe</b> <span style="font-size: 1.5vh;"> <br> <strong><u>Utility</u></strong> <br>1 Points</span></button>
+    </div>
 
+            <!-- BUTTONS FOR PRIMARY ROLLS-->
     <div class="button-container">
-        <button class="column-1" onclick="generate(0, 10)">Beans <br> 2 points</button>
-        <button class="column-1" onclick="generate(1, 15)">Button 2</button>
-        <button class="column-1" onclick="generate(2, 20)">Button 3</button>
-        <button class="column-1" onclick="generate(3, 25)">Button 4</button>
-        <button class="column-1" onclick="generate(4, 30)">Button 5</button>
-    </div>
-    <div class="button-container">
-        <button class="column-2" onclick="generate(5, 10)">Beans <br> 2 points</button>
-        <button class="column-2" onclick="generate(6, 15)">Button 2</button>
-        <button class="column-2" onclick="generate(7, 20)">Button 3</button>
-        <button class="column-2" onclick="generate(8, 25)">Button 4</button>
-        <button class="column-2" onclick="generate(9, 30)">Button 5</button>
-    </div>
-    <div class="button-container">
-        <button class="column-3" onclick="generate(10, 10)">Beans <br> 2 points</button>
-        <button class="column-3" onclick="generate(11, 15)">Button 2</button>
-        <button class="column-3" onclick="generate(12, 20)">Button 3</button>
-        <button class="column-3" onclick="generate(13, 25)">Button 4</button>
-        <button class="column-3" onclick="generate(14, 30)">Button 5</button>
-    </div>
-    <div class="button-container">
-        <button class="column-4" onclick="generate(15, 10)">Beans <br> 2 points</button>
-        <button class="column-4" onclick="generate(16, 15)">Button 2</button>
-        <button class="column-4" onclick="generate(17, 20)">Button 3</button>
-        <button class="column-4" onclick="generate(18, 25)">Button 4</button>
-        <button class="column-4" onclick="generate(19, 30)">Button 5</button>
-    </div>
+        <button style="width:215px ; height: 120px" class="column-2" onclick="generate(5, 10)" style="color:black">
+            <b style="color:black; font-size: 2vh; white-space:nowrap">Prime / Variant <br> Primary Weapon</b> <span style="font-size: 1.5vh;"><br><strong><u>High Cost</u></strong> <br> 10 Points</span></button>
+
+        <button style="width:215px ; height: 120px" class="column-2" onclick="generate(6, 5)"style="color:black">
+            <b style="color:black; font-size: 2vh; white-space:nowrap">Non-Prime <br> Primary Weapon</b> <span style="font-size: 1.5vh;"> <br> Low Cost <br>5 Points</span></button>
+
+        <button style="width:215px ; height: 120px" class="column-2" onclick="generate(7, 5)"style="color:black">
+            <b style="color:black; font-size: 2vh; white-space:nowrap">Primary Weapon <br> Mod</b> <span style="font-size: 1.5vh;"><br> High Cost <br>5 Points</span></button>
+
+        <button style="width:215px ; height: 120px" class="column-2" onclick="generate(8, 3)"style="color:black">
+            <b style="color:black; font-size: 2vh; white-space:nowrap">Primary Weapon <br> Mod</b> <span style="font-size: 1.5vh;"> <br> Low Cost <br>3 Points</span></button>
+
+        <button style="width:215px ; height: 120px" class="column-2" onclick="generate(9, 1)"style="color:black">
+            <b style="color:black; font-size: 2vh; font-size: 2vh; white-space:nowrap">Primary Weapon <br> Mod</b> <span style="font-size: 1.5vh;"> <br> Utility <br>1 Points</span></button>
+</div>
+
+<div class="button-container">
+    <button style="width:215px ; height: 120px" class="column-3" onclick="generate(10, 10)" style="color:black">
+        <b style="color:black; font-size: 2vh; white-space:nowrap">Prime / Variant <br> Secondary Weapon</b> <span style="font-size: 1.5vh;"><br><strong><u>High Cost</u></strong> <br> 10 Points</span></button>
+
+    <button style="width:215px ; height: 120px" class="column-3" onclick="generate(11, 5)"style="color:black">
+        <b style="color:black; font-size: 2vh; white-space:nowrap">Non-Prime <br> Secondary Weapon</b> <span style="font-size: 1.5vh;"> <br> Low Cost <br>5 Points</span></button>
+
+    <button style="width:215px ; height: 120px" class="column-3" onclick="generate(12, 5)"style="color:black">
+        <b style="color:black; font-size: 2vh; white-space:nowrap">Secondary Weapon <br> Mod</b> <span style="font-size: 1.5vh;"><br> High Cost <br>5 Points</span></button>
+
+    <button style="width:215px ; height: 120px" class="column-3" onclick="generate(13, 3)"style="color:black">
+        <b style="color:black; font-size: 2vh; white-space:nowrap">Secondary Weapon <br> Mod</b> <span style="font-size: 1.5vh;"> <br> Low Cost <br>3 Points</span></button>
+
+    <button style="width:215px ; height: 120px" class="column-3" onclick="generate(14, 1)"style="color:black">
+        <b style="color:black; font-size: 2vh; font-size: 2vh; white-space:nowrap">Secondary Weapon <br> Mod</b> <span style="font-size: 1.5vh;"> <br> Utility <br>1 Points</span></button>
+</div>
+
+<div class="button-container">
+    <button style="width:215px ; height: 120px" class="column-4" onclick="generate(15, 10)" style="color:black">
+        <b style="color:black; font-size: 2vh; white-space:nowrap">Prime / Variant <br> Melee Weapon</b> <span style="font-size: 1.5vh;"><br><strong><u>High Cost</u></strong> <br> 10 Points</span></button>
+
+    <button style="width:215px ; height: 120px" class="column-4" onclick="generate(16, 5)"style="color:black">
+        <b style="color:black; font-size: 2vh; white-space:nowrap">Non-Prime <br> Melee Weapon</b> <span style="font-size: 1.5vh;"> <br> Low Cost <br>5 Points</span></button>
+
+    <button style="width:215px ; height: 120px" class="column-4" onclick="generate(17, 5)"style="color:black">
+        <b style="color:black; font-size: 2vh; white-space:nowrap">Melee Weapon <br> Mod</b> <span style="font-size: 1.5vh;"><br> High Cost <br>5 Points</span></button>
+
+    <button style="width:215px ; height: 120px" class="column-4" onclick="generate(18, 3)"style="color:black">
+        <b style="color:black; font-size: 2vh; white-space:nowrap">Melee Weapon <br> Mod</b> <span style="font-size: 1.5vh;"> <br> Low Cost <br>3 Points</span></button>
+
+    <button style="width:215px ; height: 120px" class="column-4" onclick="generate(19, 1)"style="color:black">
+        <b style="color:black; font-size: 2vh; font-size: 2vh; white-space:nowrap">Melee Weapon <br> Mod</b> <span style="font-size: 1.5vh;"> <br> Utility <br>1 Points</span></button>
+</div>
+    
 
     <div class="button-container">
         <button class="btn" onclick="refundPoints()">Discard Roll</button>
         <button class="btn" onclick="undoLast()">Undo Roll</button>
     </div>
 
-    <div id="output">Generated Output: </div>
+    <div id="output">Rolls will appear here: </div>
 
 
     <!-- Main container for all groups, with a border around them -->
@@ -494,26 +569,30 @@ function openMenu(type) {
 
         let lastAction = null; // Stores the last action (for undo)
         const arrays = [
-            { preFilled: ["A1", "A2", "A3", "A4"], empty: [], cost: 10 },//0
-            { preFilled: ["B1", "B2", "B3", "B4"], empty: [], cost: 15 },//1
-            { preFilled: ["C1", "C2", "C3", "C4"], empty: [], cost: 20 },//2
-            { preFilled: ["D1", "D2", "D3", "D4"], empty: [], cost: 25 },//3
-            { preFilled: ["E1", "E2", "E3", "E4"], empty: [], cost: 30 },//4         
-            { preFilled: ["B1", "B2", "B3", "B4"], empty: [], cost: 15 },//5
-            { preFilled: ["C1", "C2", "C3", "C4"], empty: [], cost: 20 },//6
-            { preFilled: ["D1", "D2", "D3", "D4"], empty: [], cost: 25 },//7
-            { preFilled: ["E1", "E2", "E3", "E4"], empty: [], cost: 30 },//8
-            { preFilled: ["A1", "A2", "A3", "A4"], empty: [], cost: 10 },//9
-            { preFilled: ["B1", "B2", "B3", "B4"], empty: [], cost: 15 },//10
-            { preFilled: ["C1", "C2", "C3", "C4"], empty: [], cost: 20 },//11
-            { preFilled: ["D1", "D2", "D3", "D4"], empty: [], cost: 25 },//12
-            { preFilled: ["E1", "E2", "E3", "E4"], empty: [], cost: 30 },//13      
-            { preFilled: ["B1", "B2", "B3", "B4"], empty: [], cost: 15 },//14
-            { preFilled: ["C1", "C2", "C3", "C4"], empty: [], cost: 20 },//15
-            { preFilled: ["D1", "D2", "D3", "D4"], empty: [], cost: 25 },//16
-            { preFilled: ["E1", "E2", "E3", "E4"], empty: [], cost: 30 },//17
-            { preFilled: ["D1", "D2", "D3", "D4"], empty: [], cost: 25 },//18
-            { preFilled: ["D1", "E2", "E3", "E4"], empty: [], cost: 30 },//17
+            { preFilled: ["Warframe", "A2", "A3", "A4"], empty: [], cost: 10 },//0
+            { preFilled: ["WMA", "B2", "B3", "B4"], empty: [], cost: 15 },//1
+            { preFilled: ["WMHC", "C2", "C3", "C4"], empty: [], cost: 20 },//2
+            { preFilled: ["WMLC", "D2", "D3", "D4"], empty: [], cost: 25 },//3
+            { preFilled: ["WMU", "E2", "E3", "E4"], empty: [], cost: 30 },//4
+
+            { preFilled: ["PHC", "B2", "B3", "B4"], empty: [], cost: 15 },//5
+            { preFilled: ["PLC", "C2", "C3", "C4"], empty: [], cost: 20 },//6
+            { preFilled: ["PMHC", "D2", "D3", "D4"], empty: [], cost: 25 },//7
+            { preFilled: ["PMLC", "E2", "E3", "E4"], empty: [], cost: 30 },//8
+            { preFilled: ["PMU", "A2", "A3", "A4"], empty: [], cost: 10 },//9
+
+            { preFilled: ["SHC", "B2", "B3", "B4"], empty: [], cost: 15 },//10
+            { preFilled: ["SLC", "C2", "C3", "C4"], empty: [], cost: 20 },//11
+            { preFilled: ["SMHC", "D2", "D3", "D4"], empty: [], cost: 25 },//12
+            { preFilled: ["SMLC", "E2", "E3", "E4"], empty: [], cost: 30 },//13      
+            { preFilled: ["SMU", "B2", "B3", "B4"], empty: [], cost: 15 },//14
+
+            { preFilled: ["MHC", "C2", "C3", "C4"], empty: [], cost: 20 },//15
+            { preFilled: ["MLC", "D2", "D3", "D4"], empty: [], cost: 25 },//16
+            { preFilled: ["MMHC", "E2", "E3", "E4"], empty: [], cost: 30 },//17
+            { preFilled: ["MMLC", "D2", "D3", "D4"], empty: [], cost: 25 },//18
+            { preFilled: ["MMU", "E2", "E3", "E4", "17"], empty: [], cost: 30 },//19
+
 
         ];
 
@@ -529,7 +608,7 @@ function openMenu(type) {
                 const selectedString = array.preFilled.splice(randomIndex, 1)[0];
                 array.empty.push(selectedString);
                 lastAction = { index, cost, string: selectedString };
-                document.getElementById('output').innerText = `Generated Output: ${selectedString}`;
+                document.getElementById('output').innerText = `${selectedString}`;
                 updateCounter();
             } else {
                 alert("Not enough points or no more strings to generate!");
