@@ -457,7 +457,7 @@ function openMenu(type) {
 
             // Load content based on the button clicked
             if (type === 'addinfo') {
-                loadHTMLFile('menu-content', '/files/addinfo.html');
+                loadHTMLFile('menu-content', './files/addinfo.html');
             } else if (type === 'other') {
                 // You can add another file for the second button
                 loadHTMLFile('menu-content', '/files/otherinfo.html'); // Change this to your desired file
@@ -525,7 +525,7 @@ function openMenu(type) {
             xhr.send();
         }
 
-        loadHTMLFile('info-box', '/files/maininfo.html');
+        loadHTMLFile('info-box', './files/maininfo.html');
 
         function toggleInfoBox() {
             const infoBox = document.getElementById('info-box');
