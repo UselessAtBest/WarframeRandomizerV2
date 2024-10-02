@@ -25,6 +25,31 @@
             overflow-y: auto; /* Enable scrolling if content overflows */
         }
 
+        .column-1 { background-color: #7f4dcb;
+                    padding: 10px 20px;
+                    color: black;
+                    border: 2px solid #888;
+                    border-radius: 5px;
+                    cursor: pointer; }
+        .column-2 { background-color: #FF6A2D;
+                    padding: 10px 20px;
+                    color: black;
+                    border: 2px solid #888;
+                    border-radius: 5px;
+                    cursor: pointer; }
+        .column-3 { background-color: #377ff5;
+                    padding: 10px 20px;
+                    color: black;
+                    border: 2px solid #888;
+                    border-radius: 5px;
+                    cursor: pointer; }
+        .column-4 { background-color: #f7e53a;
+                    padding: 10px 20px;
+                    color: black;
+                    border: 2px solid #888;
+                    border-radius: 5px;
+                    cursor: pointer; }
+
         /* Close button styling */
         .close-button {
             position: absolute;
@@ -197,6 +222,8 @@
          margin: 20px 0; /* Existing margin */
          margin-top: 70px; /* Adjust this value to push down from the header */
          text-align:center ;
+         width:auto;
+         right: 50px;
 }
 
         /* Information box */
@@ -212,6 +239,41 @@
         #info-box.hidden {
             display: none;
         }
+
+
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            align-items:center;
+            width:100%;
+            justify-content:center
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #444;
+            color: #f5f5f5;
+            border: 2px solid #888;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #555;
+        }
+        #output {
+            display:flex;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #333;
+            border-radius: 5px;
+            border: 2px solid #888;
+            width: 50%;
+            justify-content: center;
+            margin-left:25%;
+        }
+
+        
     </style>
 </head>
 <body>
@@ -230,10 +292,68 @@
     <div id="overall-counter">Total: 0</div>
 
     <!-- Mission Brief section (initially open) -->
-    <div class="toggle-header" onclick="toggleInfoBox()">Mission Brief</div>
+    <div class="toggle-header" onclick="toggleInfoBox()" style="font-size:30px;">Mission Brief <br> <div style="font-size:10px;">(Click to toggle) </div></div>
     <div id="info-box">
         <!-- Info will be loaded from file/maininfo.html -->
     </div>
+
+    <div class="manual-container">
+        <div id="button-text">
+            Manually adjust your score with these buttons!
+        </div>
+        <div class="button-container">
+        <!-- Buttons to add values to overallCounter -->
+        <button class="btn" onclick="modifyCounter(10)">+10</button>
+        <button class="btn" onclick="modifyCounter(20)">+20</button>
+        <button class="btn" onclick="modifyCounter(30)">+30</button>
+        <button class="btn" onclick="modifyCounter(40)">+40</button>
+        </div>
+    
+    <div class="button-container">
+        <!-- Buttons to subtract values from overallCounter -->
+        <button class="btn" onclick="modifyCounter(-10)">-10</button>
+        <button class="btn" onclick="modifyCounter(-20)">-20</button>
+        <button class="btn" onclick="modifyCounter(-30)">-30</button>
+        <button class="btn" onclick="modifyCounter(-40)">-40</button>
+    </div>
+</div>
+
+    <div class="button-container">
+        <button class="column-1" onclick="generate(0, 10)">Beans <br> 2 points</button>
+        <button class="column-1" onclick="generate(1, 15)">Button 2</button>
+        <button class="column-1" onclick="generate(2, 20)">Button 3</button>
+        <button class="column-1" onclick="generate(3, 25)">Button 4</button>
+        <button class="column-1" onclick="generate(4, 30)">Button 5</button>
+    </div>
+    <div class="button-container">
+        <button class="column-2" onclick="generate(5, 10)">Beans <br> 2 points</button>
+        <button class="column-2" onclick="generate(6, 15)">Button 2</button>
+        <button class="column-2" onclick="generate(7, 20)">Button 3</button>
+        <button class="column-2" onclick="generate(8, 25)">Button 4</button>
+        <button class="column-2" onclick="generate(9, 30)">Button 5</button>
+    </div>
+    <div class="button-container">
+        <button class="column-3" onclick="generate(10, 10)">Beans <br> 2 points</button>
+        <button class="column-3" onclick="generate(11, 15)">Button 2</button>
+        <button class="column-3" onclick="generate(12, 20)">Button 3</button>
+        <button class="column-3" onclick="generate(13, 25)">Button 4</button>
+        <button class="column-3" onclick="generate(14, 30)">Button 5</button>
+    </div>
+    <div class="button-container">
+        <button class="column-4" onclick="generate(15, 10)">Beans <br> 2 points</button>
+        <button class="column-4" onclick="generate(16, 15)">Button 2</button>
+        <button class="column-4" onclick="generate(17, 20)">Button 3</button>
+        <button class="column-4" onclick="generate(18, 25)">Button 4</button>
+        <button class="column-4" onclick="generate(19, 30)">Button 5</button>
+    </div>
+
+    <div class="button-container">
+        <button class="btn" onclick="refundPoints()">Discard Roll</button>
+        <button class="btn" onclick="undoLast()">Undo Roll</button>
+    </div>
+
+    <div id="output">Generated Output: </div>
+
 
     <!-- Main container for all groups, with a border around them -->
     <div class="main-container">
@@ -368,6 +488,89 @@ function openMenu(type) {
             groupsContainer.appendChild(groupDiv);
             loadHTMLFile(groupDiv.id, file);
         });
+
+
+
+
+        let lastAction = null; // Stores the last action (for undo)
+        const arrays = [
+            { preFilled: ["A1", "A2", "A3", "A4"], empty: [], cost: 10 },//0
+            { preFilled: ["B1", "B2", "B3", "B4"], empty: [], cost: 15 },//1
+            { preFilled: ["C1", "C2", "C3", "C4"], empty: [], cost: 20 },//2
+            { preFilled: ["D1", "D2", "D3", "D4"], empty: [], cost: 25 },//3
+            { preFilled: ["E1", "E2", "E3", "E4"], empty: [], cost: 30 },//4         
+            { preFilled: ["B1", "B2", "B3", "B4"], empty: [], cost: 15 },//5
+            { preFilled: ["C1", "C2", "C3", "C4"], empty: [], cost: 20 },//6
+            { preFilled: ["D1", "D2", "D3", "D4"], empty: [], cost: 25 },//7
+            { preFilled: ["E1", "E2", "E3", "E4"], empty: [], cost: 30 },//8
+            { preFilled: ["A1", "A2", "A3", "A4"], empty: [], cost: 10 },//9
+            { preFilled: ["B1", "B2", "B3", "B4"], empty: [], cost: 15 },//10
+            { preFilled: ["C1", "C2", "C3", "C4"], empty: [], cost: 20 },//11
+            { preFilled: ["D1", "D2", "D3", "D4"], empty: [], cost: 25 },//12
+            { preFilled: ["E1", "E2", "E3", "E4"], empty: [], cost: 30 },//13      
+            { preFilled: ["B1", "B2", "B3", "B4"], empty: [], cost: 15 },//14
+            { preFilled: ["C1", "C2", "C3", "C4"], empty: [], cost: 20 },//15
+            { preFilled: ["D1", "D2", "D3", "D4"], empty: [], cost: 25 },//16
+            { preFilled: ["E1", "E2", "E3", "E4"], empty: [], cost: 30 },//17
+            { preFilled: ["D1", "D2", "D3", "D4"], empty: [], cost: 25 },//18
+            { preFilled: ["D1", "E2", "E3", "E4"], empty: [], cost: 30 },//17
+
+        ];
+
+        function updateCounter() {
+            document.getElementById('overall-counter').innerText = 'Total: ' + overallCounter;
+        }
+
+        function generate(index, cost) {
+            const array = arrays[index];
+            if (overallCounter >= cost && array.preFilled.length > 0) {
+                overallCounter -= cost;
+                const randomIndex = Math.floor(Math.random() * array.preFilled.length);
+                const selectedString = array.preFilled.splice(randomIndex, 1)[0];
+                array.empty.push(selectedString);
+                lastAction = { index, cost, string: selectedString };
+                document.getElementById('output').innerText = `Generated Output: ${selectedString}`;
+                updateCounter();
+            } else {
+                alert("Not enough points or no more strings to generate!");
+            }
+        }
+
+        function refundPoints() {
+            if (lastAction) {
+                overallCounter += lastAction.cost;
+                document.getElementById('output').innerText = `Refunded ${lastAction.cost} points`;
+                lastAction = null; // Clear after refund
+                updateCounter();
+            } else {
+                alert("No action to refund.");
+            }
+        }
+
+        function undoLast() {
+            if (lastAction) {
+                const { index, string, cost } = lastAction;
+                const array = arrays[index];
+                const emptyIndex = array.empty.indexOf(string);
+                if (emptyIndex !== -1) {
+                    array.empty.splice(emptyIndex, 1);
+                    array.preFilled.push(string);
+                    overallCounter += cost;
+                    document.getElementById('output').innerText = `Undid: ${string}`;
+                    lastAction = null; // Clear after undo
+                    updateCounter();
+                }
+            } else {
+                alert("No action to undo.");
+            }
+        }
+
+        function modifyCounter(value) {
+        overallCounter += value;
+        document.getElementById('overall-counter').innerText = 'Total: ' + overallCounter;
+    }
+
+
     </script>
 </body>
 </html>
